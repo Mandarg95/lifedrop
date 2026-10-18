@@ -1,0 +1,106 @@
+@import 'tailwindcss';
+
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
+@source '../**/*.blade.php';
+@source '../**/*.js';
+
+@theme {
+    --font-sans: 'Inter', 'Instrument Sans', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif,
+        'Apple Color Emoji', 'Segoe UI Emoji';
+    --font-display: 'Inter', 'Instrument Sans', ui-sans-serif, system-ui, sans-serif;
+}
+
+@layer base {
+    html {
+        -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+        font-feature-settings: 'cv02', 'cv03', 'cv04';
+    }
+
+    ::selection {
+        background-color: color-mix(in oklab, var(--color-rose-500) 28%, transparent);
+    }
+
+    [x-cloak] {
+        display: none !important;
+    }
+}
+
+@layer components {
+    .input {
+        @apply block w-full rounded-xl border border-slate-300 bg-white px-3.5 py-2.5 text-sm text-slate-900 shadow-sm outline-none transition placeholder:text-slate-400 focus:border-rose-400 focus:ring-4 focus:ring-rose-500/10 disabled:cursor-not-allowed disabled:bg-slate-50 disabled:text-slate-400;
+    }
+
+    .input-error {
+        @apply border-rose-300 focus:border-rose-400 focus:ring-rose-500/10;
+    }
+
+    .label {
+        @apply mb-1.5 block text-[13px] font-semibold text-slate-700;
+    }
+
+    .btn-primary {
+        @apply inline-flex items-center justify-center gap-2 rounded-xl bg-rose-600 px-4 py-2.5 text-sm font-semibold text-white shadow-sm shadow-rose-600/25 transition hover:bg-rose-700 focus:outline-none focus-visible:ring-4 focus-visible:ring-rose-600/20 disabled:cursor-not-allowed disabled:opacity-60;
+    }
+
+    .btn-secondary {
+        @apply inline-flex items-center justify-center gap-2 rounded-xl border border-slate-300 bg-white px-4 py-2.5 text-sm font-semibold text-slate-700 shadow-sm transition hover:bg-slate-50 focus:outline-none focus-visible:ring-4 focus-visible:ring-slate-900/10 disabled:cursor-not-allowed disabled:opacity-60;
+    }
+
+    .btn-danger {
+        @apply inline-flex items-center justify-center gap-2 rounded-xl border border-rose-200 bg-white px-4 py-2.5 text-sm font-semibold text-rose-600 shadow-sm transition hover:bg-rose-50 focus:outline-none focus-visible:ring-4 focus-visible:ring-rose-600/15 disabled:cursor-not-allowed disabled:opacity-60;
+    }
+
+    .btn-ghost {
+        @apply inline-flex items-center justify-center gap-2 rounded-xl px-3 py-2 text-sm font-medium text-slate-600 transition hover:bg-slate-100 hover:text-slate-900 focus:outline-none focus-visible:ring-4 focus-visible:ring-slate-900/10;
+    }
+
+    .card {
+        @apply rounded-2xl border border-slate-200 bg-white shadow-sm shadow-slate-900/[0.03];
+    }
+
+    .chip {
+        @apply inline-flex items-center gap-1.5 rounded-lg border border-slate-200 bg-white px-2.5 py-1.5 text-xs font-medium text-slate-600 transition hover:border-slate-300 hover:bg-slate-50;
+    }
+
+    .chip-active {
+        @apply border-rose-300 bg-rose-50 text-rose-700;
+    }
+
+    .table-head {
+        @apply px-5 py-3 text-left text-[11px] font-semibold uppercase tracking-wider text-slate-500;
+    }
+
+    .table-cell {
+        @apply px-5 py-3.5 text-sm text-slate-600;
+    }
+
+    .pagination-link {
+        @apply inline-flex h-9 min-w-9 items-center justify-center rounded-lg px-3 text-sm font-medium text-slate-600 transition hover:bg-white hover:text-slate-900 disabled:opacity-40;
+    }
+}
+
+@layer utilities {
+    .scrollbar-slim {
+        scrollbar-width: thin;
+        scrollbar-color: var(--color-slate-300) transparent;
+    }
+
+    .fade-in {
+        animation: fade-in 0.25s ease-out both;
+    }
+}
+
+@keyframes fade-in {
+    from {
+        opacity: 0;
+        transform: translateY(-6px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
