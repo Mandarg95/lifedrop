@@ -27,8 +27,9 @@ RUN sed -ri \
     /etc/apache2/sites-available/000-default.conf \
     /etc/apache2/apache2.conf
 
-RUN chown -R www-data:www-data storage bootstrap/cache
+RUN touch database/database.sqlite \
+    && chown -R www-data:www-data database storage bootstrap/cache
 
 EXPOSE 80
 
-CMD ["apache2-foreground"]
+CMD ["sh", "-c", "php artisan migrate --force && apache2-foreground"]
