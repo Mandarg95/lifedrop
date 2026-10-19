@@ -1,16 +1,19 @@
 
+FROM node:20 AS frontend
+
+WORKDIR /app
+
+COPY package*.json ./
+RUN npm ci
+
+COPY . .
+RUN npm run build
+
 FROM php:8.3-apache
 
 RUN apt-get update && apt-get install -y \
-    git \
-    unzip \
-    libzip-dev \
-    libicu-dev \
-    libsqlite3-dev \
-    && docker-php-ext-install \
-    pdo_sqlite \
-    intl \
-    zip \
+    git unzip libzip-dev libicu-dev libsqlite3-dev \
+    && docker-php-ext-install pdo_sqlite intl zip \
     && a2enmod rewrite \
     && rm -rf /var/lib/apt/lists/*
 
@@ -22,13 +25,16 @@ COPY . .
 
 RUN composer install --no-dev --optimize-autoloader --no-interaction
 
+COPY --from=frontend /app/public/build ./public/build
+
+RUN mkdir -p database \
+    && touch database/database.sqlite \
+    && chown -R www-data:www-data database storage bootstrap/cache
+
 RUN sed -ri \
     's!/var/www/html!/var/www/html/public!g' \
     /etc/apache2/sites-available/000-default.conf \
     /etc/apache2/apache2.conf
-
-RUN touch database/database.sqlite \
-    && chown -R www-data:www-data database storage bootstrap/cache
 
 EXPOSE 80
 
